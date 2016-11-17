@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.temple.custombrowser.MainActivity">
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:inputType="textUri"
+        android:ems="10"
+        android:id="@+id/edit_url"
+        android:imeOptions="actionDone"/>
+
+    <Button
+        android:text="Go"
+        android:layout_width="48dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="315dp"
+        android:id="@+id/go_button"/>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/go_button" />
+</RelativeLayout>
