@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 
 /**
@@ -44,7 +45,10 @@ public class WebPage extends Fragment {
         if(url.equals("")){
             url = "http://www.google.com";
         }
-        else if ((!url.contains("http://") || !url.contains("https://")) && !url.contains("www.") && url.contains(".com")) {
+        else if((!url.contains("http://") || !url.contains("https://")) && url.contains("www.") && (url.contains(".com")|| url.contains(".edu"))){
+            url = "https://" + url;
+        }
+        else if ((!url.contains("http://") || !url.contains("https://")) && !url.contains("www.") && (url.contains(".com") || url.contains(".edu"))) {
             url = "https://www." + url;
         }
         else if ((!url.contains("http://") || !url.contains("https://")) && (!url.contains(".com") || !url.contains("www."))){
@@ -55,6 +59,23 @@ public class WebPage extends Fragment {
     }
 
 
+    public void goForward(){
+        if(myWebView.canGoForward()){
+            myWebView.goForward();
+        }
+        else{
+            Toast.makeText(getActivity(),"No more pages left",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void goBack(){
+        if(myWebView.canGoBack()){
+            myWebView.goBack();
+        }
+        else{
+            Toast.makeText(getActivity(),"No more pages left",Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
 

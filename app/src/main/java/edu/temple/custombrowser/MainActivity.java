@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         button = (Button) findViewById(R.id.go_button);
 
         final Uri data = getIntent().getData();
-
+        fragment_array.add(newPageIndex, new WebPage());
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,15 +79,14 @@ public class MainActivity extends AppCompatActivity {
 /*...........................................................................................................................................*/
 /*Pager Adapter Class*/
 
-    private class CustomPagerAdapter extends FragmentPagerAdapter {
+    private class CustomPagerAdapter extends FragmentStatePagerAdapter {
 
-        public CustomPagerAdapter(FragmentManager fm) {
+        private CustomPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int pos) {
-            fragment_array.add(newPageIndex, new WebPage());
             newPageIndex++;
             return fragment_array.get(pos);
         }
@@ -111,21 +111,28 @@ public class MainActivity extends AppCompatActivity {
 
         if(item.getItemId() == R.id.menu_previous) {
             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+            userText.setText("");
 
         }
         else if(item.getItemId() == R.id.menu_new) {
-            WebPage fragment = new WebPage();
-            fragment_array.add(newPageIndex, fragment);
+            fragment_array.add(newPageIndex, new WebPage());
             NUM_FRAGS++;
             pagerAdapter = viewPager.getAdapter();
             pagerAdapter.notifyDataSetChanged();
             viewPager.setCurrentItem(newPageIndex);
             userText.setText("");
-
         }
         else if(item.getItemId() == R.id.menu_next) {
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-
+            userText.setText("");
+        }
+        else if(item.getItemId() == R.id.go_back){
+            fragment_array.get(viewPager.getCurrentItem()).goBack();
+            userText.setText("");
+        }
+        else if(item.getItemId() == R.id.go_forward){
+            fragment_array.get(viewPager.getCurrentItem()).goForward();
+            userText.setText("");
         }
         return super.onOptionsItemSelected(item);
     }
